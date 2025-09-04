@@ -1,0 +1,27 @@
+{
+  "name": "discord-verification-bot",
+  "version": "1.0.0",
+  "description": "Professional Discord verification bot with Collab.Land style messages",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dev": "nodemon bot.js",
+    "test": "node bot.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "verification",
+    "collab.land",
+    "token",
+    "extraction"
+  ],
+  "author": "Token Extraction System",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
+    "discord.js": "^14.22.1",
+    "express": "^5.1.0"
+  }
+}

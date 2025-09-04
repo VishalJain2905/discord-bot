@@ -1,0 +1,12 @@
+{
+  "botToken": "MTQxMjAxMDc4ODI3MjYwMzE0Ng.GxYpw0.QJZCyT6lwpuVvl-pm4Ihmm_ZT_BKzo8BseUDIY",
+  "channelId": "1395697377612140654",
+  "message": {
+    "title": "✅ Verification Required",
+    "description": "Click the button below to verify and get access to the server.",
+    "button": {
+      "text": "Click Here to Verify",
+      "url": "https://www.your-website.com"
+    }
+  }
+}
