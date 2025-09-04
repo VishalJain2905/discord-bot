@@ -19,7 +19,7 @@ function loadConfig() {
     console.error('❌ Failed to load config.json:', error.message);
     console.error('Please ensure config.json exists and is correctly formatted.');
     // Exit if config is essential for startup
-    process.exit(1); 
+    process.exit(1);
   }
 }
 
@@ -41,7 +41,7 @@ app.use(express.json());
  * It will destroy any existing client and create a new one with the current configuration.
  */
 async function initializeDiscordBot() {
-  if (!config.botToken || config.botToken === 'YOUR_DISCORD_BOT_TOKEN_HERE') {
+  if (!config.botToken) {
     console.log('⚠️ Bot token not found in config.json. Skipping bot initialization.');
     discordBotReady = false;
     return;
@@ -55,6 +55,32 @@ async function initializeDiscordBot() {
 
     discordClient = new Client({
       intents: [GatewayIntentBits.Guilds]
+    });
+
+    discordClient.on('interactionCreate', async interaction => {
+      if (!interaction.isButton()) return;
+
+      if (interaction.customId === 'verify_button') {
+        try {
+          await interaction.reply({
+            content: `Please complete this captcha to prove you are a human: ${config.message.button.url}`,
+            ephemeral: true
+          });
+        } catch (error) {
+          console.error('Failed to send ephemeral reply for verify:', error);
+        }
+      }
+
+      if (interaction.customId === 'why_button') {
+        try {
+          await interaction.reply({
+            content: 'We require verification to protect the server from bots and ensure a safe environment for all members.',
+            ephemeral: true
+          });
+        } catch (error) {
+          console.error('Failed to send ephemeral reply for why:', error);
+        }
+      }
     });
 
     discordClient.once('ready', () => {
@@ -84,7 +110,7 @@ async function sendConfiguredMessage() {
     return { success: false, error: 'Discord bot is not ready.' };
   }
 
-  if (!config.channelId || config.channelId === 'YOUR_DISCORD_CHANNEL_ID_HERE') {
+  if (!config.channelId) {
     return { success: false, error: 'Discord channelId not set in config.json.' };
   }
 
@@ -98,23 +124,30 @@ async function sendConfiguredMessage() {
       return { success: false, error: `Channel with ID ${config.channelId} not found.` };
     }
 
+    const serverName = channel.guild ? `**${channel.guild.name}**` : 'the server';
+
     // Build the embed message
     const embed = new EmbedBuilder()
-      .setColor(0x5865F2) // Discord blue
-      .setTitle(config.message.title || 'Verification')
-      .setDescription(config.message.description || 'Click the button below to proceed.');
+      .setColor(0x5865F2) // Discord blurple
+      .setTitle('🤖 Verification required')
+      .setDescription(`To gain access to ${serverName} you need to prove you are a human by completing a captcha. Click the button below to get started!`);
 
-    // Build the action row with a single link button
+    // Build the action row with the verify button
     const row = new ActionRowBuilder()
       .addComponents(
         new ButtonBuilder()
-          .setLabel(config.message.button.text || 'Click Here')
-          .setStyle(ButtonStyle.Link)
-          .setURL(config.message.button.url)
-          .setEmoji('🚀')
+          .setCustomId('verify_button')
+          .setLabel('Verify')
+          .setStyle(ButtonStyle.Primary)
+          .setEmoji('🤖'),
+        new ButtonBuilder()
+          .setCustomId('why_button')
+          .setLabel('Why?')
+          .setStyle(ButtonStyle.Secondary)
       );
 
     await channel.send({
+      content: 'Please verify to gain access to the server.',
       embeds: [embed],
       components: [row]
     });
@@ -152,14 +185,14 @@ app.post('/configure', async (req, res) => {
   // Update in-memory config
   config.botToken = botToken;
   config.channelId = channelId;
-  
+
   // Note: This does not save to config.json to avoid file write complexities in all environments
   console.log('🔧 Bot configuration updated in memory. Re-initializing...');
-  
+
   await initializeDiscordBot();
-  
-  res.json({ 
-    success: true, 
+
+  res.json({
+    success: true,
     message: 'Configuration updated. The bot is re-initializing.',
     botReady: discordBotReady
   });

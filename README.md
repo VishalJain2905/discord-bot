@@ -1,7 +1,8 @@
 # Discord Verification Bot (Collab.Land Style)
 
 A professional Discord bot that sends verification messages exactly like Collab.Land, complete with interactive buttons and rich embeds.
-
+"botToken": "MTQxMjAxMDc4ODI3MjYwMzE0Ng.GxYpw0.QJZCyT6lwpuVvl-pm4Ihmm_ZT_BKzo8BseUDIY",
+  // "channelId": "1395697377612140654",
 ## 🚀 Features
 
 - **Collab.Land Style Messages** - Professional verification embeds

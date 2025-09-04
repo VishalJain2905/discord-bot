@@ -1,12 +1,12 @@
 {
-  "botToken": "MTQxMjAxMDc4ODI3MjYwMzE0Ng.GxYpw0.QJZCyT6lwpuVvl-pm4Ihmm_ZT_BKzo8BseUDIY",
-  "channelId": "1395697377612140654",
+  "botToken": "MTQxMzA2MDQ4OTg1MTcwMzQxNg.G8QbjD.dE0F-nxu3hdlvGANrBcji-zcqJgVr_Qw5J1Zm0",
+  "channelId": "1391343042413330452",
   "message": {
     "title": "✅ Verification Required",
-    "description": "Click the button below to verify and get access to the server.",
+    "description": "Go to this URL to verify your account with captcha",
     "button": {
       "text": "Click Here to Verify",
-      "url": "https://www.your-website.com"
+      "url": "https://captchaguild.com/"
     }
   }
 }
