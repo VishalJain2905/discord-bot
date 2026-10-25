@@ -1,12 +1,12 @@
 {
-  "botToken": "MTQxMzA2MDQ4OTg1MTcwMzQxNg.G8QbjD.dE0F-nxu3hdlvGANrBcji-zcqJgVr_Qw5J1Zm0",
-  "channelId": "1391343042413330452",
+  "botToken": "YOUR_DISCORD_BOT_TOKEN_HERE",
+  "channelId": "123456789012345678",
   "message": {
     "title": "✅ Verification Required",
     "description": "Go to this URL to verify your account with captcha",
     "button": {
       "text": "Click Here to Verify",
-      "url": "https://captchaguild.com/"
+      "url": "https://example.com/verify"
     }
   }
 }
